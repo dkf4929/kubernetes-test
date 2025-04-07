@@ -1,17 +1,20 @@
+# login-service-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: login-service
-  labels:
-    app: login-service
 spec:
-  replicas: 2
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
   selector:
     matchLabels:
       app: login-service
   template:
     metadata:
-      name: login-service
       labels:
         app: login-service
     spec:
@@ -20,6 +23,15 @@ spec:
           image: yeongho/login-service:latest
           ports:
             - containerPort: 8080
-              protocol: TCP
-      restartPolicy: Always
-      
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 10
