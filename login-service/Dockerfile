@@ -1,10 +1,7 @@
 FROM gradle:8.12.1-jdk21 AS build
 WORKDIR /app
-<<<<<<< HEAD
-COPY . .  
-=======
+
 COPY . .
->>>>>>> 1e422a9 (kubernetes)
 
 RUN gradle clean build --no-daemon
 

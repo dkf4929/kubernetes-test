@@ -1,6 +1,2 @@
 server:
-<<<<<<< HEAD
-  port: 8081
-=======
   port: 8080
->>>>>>> 1e422a9 (kubernetes)
